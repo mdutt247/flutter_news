@@ -43,7 +43,6 @@ class _HomeListState extends State<HomeList> {
                 color: Colors.white,
               ),
               onPressed: ()  {
-
                 if (token != null) {
                   Navigator.pushReplacementNamed(context, '/profile');
                 }

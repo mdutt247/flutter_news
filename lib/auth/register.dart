@@ -16,7 +16,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-
   // String selectedDept;
   // List data = List();
   //
@@ -117,19 +116,25 @@ class _RegisterState extends State<Register> {
       if (form.validate()) {
         form.save();
         auth
-            .register(
-                first_name, last_name, email, password, password_confirmation)//, selectedDept)
+            .register(first_name, last_name, email, password,
+                password_confirmation) //, selectedDept)
             .then((response) {
           if (response['status']) {
             UserModel user = response['data'];
             Provider.of<UserProvider>(context, listen: false).setUser(user);
             Navigator.pushReplacementNamed(context, '/dashboard');
           } else {
-            Flushbar(
-              title: "Registration failed",
-              message: response.toString(),
-              duration: Duration(seconds: 20),
-            ).show(context);
+            String combinedMessage = "";
+            response["data"]["errors"].forEach((key, messages) {
+              for (var message in messages) {
+                combinedMessage = combinedMessage + "- $message\n";
+              }
+              Flushbar(
+                title: "Registration failed",
+                message: combinedMessage,
+                duration: Duration(seconds: 20),
+              ).show(context);
+            });
           }
         });
       } else {
