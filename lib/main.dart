@@ -1,3 +1,5 @@
+import 'package:flutter_news/auth/profile.dart';
+
 import 'auth/forgot.dart';
 import 'auth/logout.dart';
 import 'package:flutter/material.dart';
@@ -55,16 +57,19 @@ class MyApp extends StatelessWidget {
                   case ConnectionState.waiting:
                     return CircularProgressIndicator();
                   default:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else if (snapshot.data.token == null)
-                      return Login();
-                    else
-                      UserPreferences().removeUser();
-                    return Welcome(user: snapshot.data);
+                    // if (snapshot.hasError)
+                    //   return Text('Error: ${snapshot.error}');
+                    // else if (snapshot.data.token == null)
+                    //   return Login();
+                    // else
+                    //   UserPreferences().removeUser();
+                    // return Welcome(user: snapshot.data);
+                    return HomeList();
                 }
               }),
           routes: {
+            '/home': (context) => HomeList(),
+            '/profile': (context) => Profile(),
             '/register': (context) => Register(),
             '/login': (context) => Login(),
             '/dashboard': (context) => DashBoard(),
