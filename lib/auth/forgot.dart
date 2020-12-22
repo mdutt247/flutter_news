@@ -6,6 +6,7 @@ import 'providers/user_provider.dart';
 import 'util/validators.dart';
 import 'util/widgets.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
 class Forgot extends StatefulWidget {
   @override
@@ -68,14 +69,12 @@ class _ForgotState extends State<Forgot> {
           print('response');
           print(response);
           if (response['status']) {
-            // print('mail sent');
             Navigator.pushReplacementNamed(context, '/login');
           } else {
             Flushbar(
               title: "Failed Forgot",
-              message: response['message']['data'].toString(),
-              // message: response['message']['message'].toString(),
-              duration: Duration(seconds: 3),
+              message: jsonDecode(response['message'])['errors'],
+              duration: Duration(seconds: 10),
             ).show(context);
           }
         });

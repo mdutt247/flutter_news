@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import '../models/UserModel.dart';
@@ -81,9 +83,9 @@ class _LoginState extends State<Login> {
             Navigator.pushReplacementNamed(context, '/dashboard');
           } else {
             Flushbar(
-              title: "Failed Login",
-              message: response['message']['message'].toString(),
-              duration: Duration(seconds: 3),
+              title: "Login failed",
+              message: jsonDecode(response['message'])['errors'],
+              duration: Duration(seconds: 10),
             ).show(context);
           }
         });

@@ -1,4 +1,3 @@
-import '../auth/util/app_url.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import '../models/UserModel.dart';
@@ -7,8 +6,6 @@ import 'providers/user_provider.dart';
 import 'util/validators.dart';
 import 'util/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Register extends StatefulWidget {
   @override
@@ -132,7 +129,7 @@ class _RegisterState extends State<Register> {
               Flushbar(
                 title: "Registration failed",
                 message: combinedMessage,
-                duration: Duration(seconds: 20),
+                duration: Duration(seconds: 10),
               ).show(context);
             });
           }
@@ -141,7 +138,7 @@ class _RegisterState extends State<Register> {
         Flushbar(
           title: "Invalid form",
           message: "Please complete the form properly",
-          duration: Duration(seconds: 20),
+          duration: Duration(seconds: 10),
         ).show(context);
       }
     };
@@ -174,7 +171,7 @@ class _RegisterState extends State<Register> {
                   label("Confirm Password"),
                   confirmPassword,
                   SizedBox(height: 12.0),
-                  auth.loggedInStatus == Status.Authenticating
+                  auth.registeredInStatus == Status.Registering
                       ? loading
                       : longButtons("Register", doRegister),
                 ],
